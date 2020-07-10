@@ -4,8 +4,9 @@ import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import imageApi from './services/imageApi';
 import Modal from './Modal';
+import Loader from './Loader/Loader';
+import Button from './Button';
 
-import Loader from 'react-loader-spinner';
 import './index.css';
 
 export default class App extends Component {
@@ -22,11 +23,24 @@ export default class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     const prevTempQuery = prevState.tempQuery;
     const nextTempQuery = this.state.tempQuery;
+    const prevImages = prevState.images;
+    const nextImages = this.state.images;
 
     if (prevTempQuery !== nextTempQuery) {
       return this.fetchImages();
     }
+
+    if (prevImages.length !== '' && prevImages !== nextImages) {
+      this.scrol();
+    }
   }
+
+  scrol = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
 
   onSubmitForm = query => {
     this.setState({ tempQuery: query, images: [], page: 1, error: null });
@@ -72,19 +86,9 @@ export default class App extends Component {
 
         <ImageGallery images={images} onClick={this.handleImageClick} />
         <div className="button_and_loader">
-          {isLoading && (
-            <Loader
-              type="ThreeDots"
-              color="#00BFFF"
-              height={100}
-              width={100}
-              timeout={3000}
-            />
-          )}
+          {isLoading && <Loader />}
           {images.length > 0 && !isLoading && (
-            <button className="Button" type="button" onClick={this.fetchImages}>
-              Next
-            </button>
+            <Button onClick={this.fetchImages} />
           )}
         </div>
       </>

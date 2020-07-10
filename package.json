@@ -1,8 +1,9 @@
 {
   "name": "goit-react-hw-03-image-finder",
-  "homepage": "https://gen2023.github.io/goit-react-hw-03-image-finder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
+  "homepage": "https://gen2023.github.io/goit-react-hw-03-image-finder",
+  "author": "Romanko Evgen <gen2023@yandex.ru>",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
