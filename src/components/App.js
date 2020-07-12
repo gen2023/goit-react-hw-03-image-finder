@@ -12,7 +12,7 @@ import './index.css';
 export default class App extends Component {
   state = {
     images: [],
-    tempQuery: '',
+    query: '',
     page: 1,
     isLoading: false,
     error: null,
@@ -21,16 +21,14 @@ export default class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const prevTempQuery = prevState.tempQuery;
-    const nextTempQuery = this.state.tempQuery;
-    const prevImages = prevState.images;
-    const nextImages = this.state.images;
+    const { images, query } = this.state;
+    const { images: prevImage, query: prevQuery } = prevState;
 
-    if (prevTempQuery !== nextTempQuery) {
+    if (prevQuery !== query) {
       return this.fetchImages();
     }
 
-    if (prevImages.length !== '' && prevImages !== nextImages) {
+    if (prevImage.length !== '' && prevImage !== images) {
       this.scrol();
     }
   }
@@ -43,13 +41,13 @@ export default class App extends Component {
   };
 
   onSubmitForm = query => {
-    this.setState({ tempQuery: query, images: [], page: 1, error: null });
+    this.setState({ query: query, images: [], page: 1, error: null });
   };
   fetchImages = () => {
-    const { page, tempQuery } = this.state;
+    const { page, query } = this.state;
     this.setState({ isLoading: true });
     const options = {
-      tempQuery,
+      query,
       page,
     };
     imageApi
